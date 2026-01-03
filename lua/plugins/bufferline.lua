@@ -61,4 +61,4 @@ return {
         vim.keymap.set("n", "bd", "<cmd>bdelete<CR>", { silent = true, noremap = true })
         vim.keymap.set("n", "bdd", "<cmd>bdelete!<CR>", { silent = true, noremap = true })
     end,
-},
+}

@@ -20,7 +20,3 @@ vim.api.nvim_set_keymap('n', '<Esc>', ':noh<CR><Esc>', { noremap = true, silent 
 
 vim.api.nvim_set_keymap('n', '<F5>', ':sp<CR>', { noremap=true, silent=true })
 vim.api.nvim_set_keymap('n', '<F6>', ':vs<CR>', { noremap=true, silent=true })
-
-vim.api.nvim_set_keymap('n', '<Tab>', ':bnext<CR>', { noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', '<S-Tab>', ':bprevious<CR>', { noremap=true, silent=true})
-vim.api.nvim_set_keymap('n', 'bd', ':bdelete<CR>', { noremap=true, silent=true})
