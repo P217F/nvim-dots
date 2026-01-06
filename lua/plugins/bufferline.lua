@@ -56,9 +56,8 @@ return {
                 },
             }
         }
-        vim.keymap.set("n", "<Tab>", "<cmd>BufferLineCycleNext<CR>", { silent = true, noremap = true })
-        vim.keymap.set("n", "<S-Tab>", "<cmd>BufferLineCyclePrev<CR>", { silent = true, noremap = true })
         vim.keymap.set("n", "bd", "<cmd>bdelete<CR>", { silent = true, noremap = true })
         vim.keymap.set("n", "bdd", "<cmd>bdelete!<CR>", { silent = true, noremap = true })
+end
     end,
 }

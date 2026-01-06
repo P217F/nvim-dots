@@ -1,5 +1,5 @@
 # nvim-dots
-This is an dotfiles repo for neovim, default support for Python,C,C++,Javascript  
+This is an dotfiles repo for neovim, default support for Python,C,C++  
 
 ## Installation
 - Cloning to ~/.config/nvim: git clone https://github.com/P217F/nvim-dots ~/.config/nvim  
@@ -7,7 +7,7 @@ This is an dotfiles repo for neovim, default support for Python,C,C++,Javascript
 
 ### Requirements:
 - git
-- clangd(LSP for C/C++)
-- codelldb(recommend)
-- pyright(LSP for Python)
-- debugpy(require virtual environment python)
+- npm(for downloading lsp depend on Javascript)
+- Commandline tools include: tar, unzip(provide by package manager in linux, on windows using msys2)
+- codelldb(recommend for C/C++)
+- debugpy(require virtual environment python, don't using Mason)

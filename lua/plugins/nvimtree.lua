@@ -6,7 +6,7 @@ return {
 
   opts = {
     sort = { sorter = "case_sensitive" },
-    view = { width = 24, float = { enable = false } },
+    view = { width = 28, float = { enable = false } },
     renderer = {
       group_empty = true,
       indent_markers = { enable = true },
@@ -37,7 +37,7 @@ return {
   config = function(_, opts)
     require("nvim-tree").setup(opts)
 
-    vim.keymap.set("n", "<F4>", "<cmd>NvimTreeToggle<CR>", {
+    vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", {
       noremap = true,
       silent = true,
       desc = "Toggle NvimTree",

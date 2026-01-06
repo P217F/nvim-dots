@@ -60,11 +60,11 @@ return {
         },
       }
 
-      vim.api.nvim_set_keymap("n", "<leader>b", '<Cmd>lua require"dap".toggle_breakpoint()<CR>', opts)
+      vim.api.nvim_set_keymap("n", "<leader>br", '<Cmd>lua require"dap".toggle_breakpoint()<CR>', opts)
       vim.api.nvim_set_keymap("n", "<F10>", '<Cmd>lua require"dap".step_over()<CR>', opts)
       vim.api.nvim_set_keymap("n", "<F11>", '<Cmd>lua require"dap".step_into()<CR>', opts)
       vim.api.nvim_set_keymap("n", "<F12>", '<Cmd>lua require"dap".step_out()<CR>', opts)
-      vim.api.nvim_set_keymap("n", "<leader>t", '<Cmd>lua require"dap".terminate()<CR>', opts)
+      vim.api.nvim_set_keymap("n", "<leader>te", '<Cmd>lua require"dap".terminate()<CR>', opts)
 
       vim.keymap.set("n", "<F9>", function()
         require("lazy").load({ plugins = { "nvim-dap-ui" } })
