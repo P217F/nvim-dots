@@ -4,15 +4,27 @@ return {
     lazy = false,
     event = { "BufReadPre", "BufNewFile" },
     config = function()
-      local lspconfig = require("lspconfig")
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
-      local on_attach = function(client, bufnr)
+
+      local on_attach = function(_, bufnr)
         local opts = { noremap = true, silent = true, buffer = bufnr }
         vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
       end
 
-      local clangd_config = {
+      vim.api.nvim_create_autocmd("LspAttach", {
+        once = true,
+        callback = function()
+          vim.schedule(function()
+            local ok, base46 = pcall(require, "base46")
+            if ok then
+              base46.load_all_highlights()
+            end
+          end)
+        end,
+      })
+
+      vim.lsp.config("clangd", {
         cmd = {
           "clangd",
           "--background-index",
@@ -22,60 +34,51 @@ return {
         },
         capabilities = capabilities,
         on_attach = on_attach,
-        root_dir = function(fname)
-          local found = vim.fs.find({ ".clangd", "compile_commands.json", ".git" }, { upward = true, path = fname })
-          return #found > 0 and vim.fs.dirname(found[1]) or vim.fn.getcwd()
-        end,
-      }
+        root_markers = {
+          ".clangd",
+          "compile_commands.json",
+          ".git",
+        },
+      })
+      vim.lsp.enable("clangd")
 
-      local pyright_config = {
-        cmd = { "pyright-langserver", "--stdio" },
+      vim.lsp.config("pyright", {
         capabilities = capabilities,
         on_attach = on_attach,
-        root_dir = function(fname)
-          local found = vim.fs.find({ "pyrightconfig.json", ".git", "pyproject.toml", "setup.py" }, { upward = true, path = fname })
-          return #found > 0 and vim.fs.dirname(found[1]) or vim.fn.getcwd()
-        end,
-      }
-
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = { "c", "cpp", "h", "hpp", "objc", "objcpp" },
-        callback = function()
-          local clients = vim.lsp.get_clients({ bufnr = 0 })
-          for _, c in ipairs(clients) do
-            if c.name == "clangd" then return end
-          end
-          vim.lsp.start(clangd_config)
-        end,
+        root_markers = {
+          "pyrightconfig.json",
+          "pyproject.toml",
+          "setup.py",
+          ".git",
+        },
       })
+      vim.lsp.enable("pyright")
 
-      vim.api.nvim_create_autocmd("FileType", {
-        pattern = "python",
-        callback = function()
-          local clients = vim.lsp.get_clients({ bufnr = 0 })
-          for _, c in ipairs(clients) do
-            if c.name == "pyright" then return end
-          end
-          vim.lsp.start(pyright_config)
-        end,
-      })
-
-      vim.api.nvim_create_autocmd("CursorHold", {
-        callback = function()
-          vim.diagnostic.open_float(nil, { focus = false, scope = "cursor", border = "rounded" })
-        end,
-      })
-
-      vim.diagnostic.config({
-        virtual_text = false,
-        signs = {
-          text = {
-            [vim.diagnostic.severity.ERROR] = " ",
-            [vim.diagnostic.severity.WARN]  = " ",
-            [vim.diagnostic.severity.HINT]  = " ",
-            [vim.diagnostic.severity.INFO]  = " ",
+      vim.lsp.config("rust_analyzer", {
+        capabilities = capabilities,
+        on_attach = on_attach,
+        root_markers = {
+          "Cargo.toml",
+          "rust-project.json",
+          ".git",
+        },
+        settings = {
+          ["rust-analyzer"] = {
+            cargo = {
+              allFeatures = true,
+              loadOutDirsFromCheck = true,
+            },
+            checkOnSave = false,
+            procMacro = { enable = true },
+            diagnostics = { enable = true },
           },
         },
+      })
+      vim.lsp.enable("rust_analyzer")
+
+      vim.diagnostic.config({
+        virtual_text = true,
+        signs = false,
         underline = true,
         update_in_insert = false,
         severity_sort = true,

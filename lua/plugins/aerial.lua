@@ -17,7 +17,7 @@ return {
       },
     })
 
-    vim.keymap.set("n", "<F8>", "<cmd>AerialToggle!<CR>", {
+    vim.keymap.set("n", "<F3>", "<cmd>AerialToggle!<CR>", {
       noremap = true,
       silent = true,
       desc = "Toggle Aerial outline",
