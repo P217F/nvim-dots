@@ -28,15 +28,20 @@ return {
         cmd = {
           "clangd",
           "--background-index",
-          "--clang-tidy",
           "--completion-style=detailed",
           "--cross-file-rename",
+          "--header-insertion=never",
+          "--pch-storage=disk",
+          "-j=3",
+          "--limit-results=200",
+          "--limit-references=200",
         },
         capabilities = capabilities,
         on_attach = on_attach,
         root_markers = {
           ".clangd",
           "compile_commands.json",
+          "compile_flags.txt",
           ".git",
         },
       })
@@ -45,6 +50,15 @@ return {
       vim.lsp.config("pyright", {
         capabilities = capabilities,
         on_attach = on_attach,
+        settings = {
+          python = {
+            analysis = {
+              diagnosticMode = "workspace",
+              indexing = true,
+              autoSearchPaths = true,
+            },
+          },
+        },
         root_markers = {
           "pyrightconfig.json",
           "pyproject.toml",
