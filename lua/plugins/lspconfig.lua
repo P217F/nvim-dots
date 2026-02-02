@@ -54,28 +54,6 @@ return {
       })
       vim.lsp.enable("pyright")
 
-      vim.lsp.config("rust_analyzer", {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        root_markers = {
-          "Cargo.toml",
-          "rust-project.json",
-          ".git",
-        },
-        settings = {
-          ["rust-analyzer"] = {
-            cargo = {
-              allFeatures = true,
-              loadOutDirsFromCheck = true,
-            },
-            checkOnSave = false,
-            procMacro = { enable = true },
-            diagnostics = { enable = true },
-          },
-        },
-      })
-      vim.lsp.enable("rust_analyzer")
-
       vim.diagnostic.config({
         virtual_text = true,
         signs = false,
